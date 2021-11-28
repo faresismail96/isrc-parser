@@ -16,7 +16,9 @@ object GenerateOutput {
         implicit object TSVFormat extends TSVFormat
         val writer = CSVWriter.open(new File(outputPath))
 
-        val res = data.sortBy(_.amount).map(rec => List(rec.title, rec.amount))
+        val res = data
+          .sortBy(_.amount)(Ordering[Double].reverse)
+          .map(rec => List(rec.title, rec.amount))
         writer.writeRow(header)
         writer.writeAll(res)
         writer.close()
