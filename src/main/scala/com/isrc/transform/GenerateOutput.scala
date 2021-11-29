@@ -17,7 +17,7 @@ object GenerateOutput {
         val writer = CSVWriter.open(new File(outputPath))
 
         val res = data
-          .sortBy(_.amount)(Ordering[Double].reverse)
+          .sortBy(_.amount)(Ordering.Double.TotalOrdering.reverse)
           .map(rec => List(rec.title, rec.amount))
         writer.writeRow(header)
         writer.writeAll(res)
