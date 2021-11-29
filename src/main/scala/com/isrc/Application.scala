@@ -20,7 +20,10 @@ object Application {
           .traverse(rec => RecordValidator.validateRecord(rec))
           .toEither
         mergedRecs = Compute.mergeRecords(records)
-        _ <- GenerateOutput.reconstructFile(header, mergedRecs, outputPath)
+        outputHeaders <- GenerateOutput.outputHeaders(header)
+        _ <- GenerateOutput.reconstructFile(outputHeaders,
+                                            mergedRecs,
+                                            outputPath)
       } yield (mergedRecs)) match {
         case Left(e) =>
           e.map(err => println(err.asString ++ "\n"))
